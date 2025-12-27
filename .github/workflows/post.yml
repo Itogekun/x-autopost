@@ -7,7 +7,7 @@ on:
 
 # ここを true にすると投稿が再開
 env:
-  ENABLE_RUN: "false"
+  ENABLE_RUN: "true"
 
 jobs:
   run:
