@@ -1,12 +1,13 @@
 name: X Queue Poster
 
 on:
-  # schedule:
-  #   - cron: "*/10 * * * *" # 10分おき
-  # workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *" # 10分おき
+  workflow_dispatch:
 
+# ここを true にすると投稿が再開
 env:
-  ENABLE_RUN: "false"   # ←止めたい間は false / 再開するとき true
+  ENABLE_RUN: "false"
 
 jobs:
   run:
@@ -23,14 +24,20 @@ jobs:
 
       - name: Run queue
         env:
+          # スイッチ（上のenvをこのステップに確実に渡す）
+          ENABLE_RUN: ${{ env.ENABLE_RUN }}
+
+          # X
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_KEY_SECRET: ${{ secrets.X_API_KEY_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
 
+          # Sheets
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
 
+          # App settings
           SHEET_NAME: queue
           MAX_POSTS_PER_RUN: "1"
         run: python post_queue.py
