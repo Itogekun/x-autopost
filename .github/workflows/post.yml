@@ -1,9 +1,9 @@
 name: X Queue Poster
 
 on:
-  schedule:
-    - cron: "*/10 * * * *" # 10分おき
-  workflow_dispatch:
+  # schedule:
+  #   - cron: "*/10 * * * *" # 10分おき
+  # workflow_dispatch:
 
 env:
   ENABLE_RUN: "false"   # ←止めたい間は false / 再開するとき true
